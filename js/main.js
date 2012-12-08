@@ -1,5 +1,7 @@
+var c;
+
 window.onload = function(){
 
-    var c = new Controller();
+    c = new Controller();
 
 };
