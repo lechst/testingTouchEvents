@@ -28,6 +28,10 @@ View = function(){
 
     };
 
+    this.setTouches = function(type,touch,target,changed){
+
+    };
+
     this.init();
 
 };

@@ -43,11 +43,19 @@ TouchBox = function(view){
         this.htmlPastTouches.style.width = this.htmlTouchBox.style.width;
         this.htmlPastTouches.style.height = this.htmlTouchBox.style.height;
 
+        this.htmlPastTouches.width = this.htmlPastTouches.offsetWidth;
+        this.htmlPastTouches.height = this.htmlPastTouches.offsetHeight;
+        this.ctxPastTouches = this.htmlPastTouches.getContext('2d');
+
         this.htmlPresentTouches = document.getElementById('presentTouches');
 
         this.htmlPresentTouches.style.position = 'absolute';
         this.htmlPresentTouches.style.width = this.htmlTouchBox.style.width;
         this.htmlPresentTouches.style.height = this.htmlTouchBox.style.height;
+
+        this.htmlPresentTouches.width = this.htmlPresentTouches.offsetWidth;
+        this.htmlPresentTouches.height = this.htmlPresentTouches.offsetHeight;
+        this.ctxPresentTouches = this.htmlPresentTouches.getContext('2d');
 
         this.htmlTargetBox = document.getElementById('targetBox');
 

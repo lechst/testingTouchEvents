@@ -36,6 +36,10 @@ HistoryBox = function(view){
         this.htmlHistoryLine.style.height = '40px';
         this.htmlHistoryLine.style.width = this.htmlHistoryBox.style.width;
 
+        this.htmlHistoryLine.width = this.htmlHistoryLine.offsetWidth;
+        this.htmlHistoryLine.height = this.htmlHistoryLine.offsetHeight;
+        this.ctxHistoryLine = this.htmlHistoryLine.getContext('2d');
+
         this.htmlToolsBox = document.getElementById('toolsBox');
 
         this.htmlToolsBox.style.position = 'absolute';
@@ -91,6 +95,10 @@ HistoryBox = function(view){
             - parseInt(this.htmlScrollCanvas.style.borderLeftWidth)
             - parseInt(this.htmlScrollCanvas.style.borderRightWidth) ) + 'px';
         this.htmlScrollCanvas.style.height = this.htmlToolsBox.style.height;
+
+        this.htmlScrollCanvas.width = this.htmlScrollCanvas.offsetWidth;
+        this.htmlScrollCanvas.height = this.htmlScrollCanvas.offsetHeight;
+        this.ctxScrollCanvas = this.htmlScrollCanvas.getContext('2d');
 
         this.htmlScrollCanvasDiv = document.getElementById('scrollCanvasDiv');
 
