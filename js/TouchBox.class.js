@@ -6,7 +6,7 @@ TouchBox = function(view){
 
         this.touchBoxLayout();
 
-        this.circleObj = new CircleObj();
+        this.drawTouch = new DrawTouch();
 
     };
 
