@@ -40,20 +40,20 @@ TouchBox = function(view){
         this.htmlPastTouches = document.getElementById('pastTouches');
 
         this.htmlPastTouches.style.position = 'absolute';
-        this.htmlPastTouches.style.width = '100%';
-        this.htmlPastTouches.style.height = '100%';
+        this.htmlPastTouches.style.width = this.htmlTouchBox.style.width;
+        this.htmlPastTouches.style.height = this.htmlTouchBox.style.height;
 
         this.htmlPresentTouches = document.getElementById('presentTouches');
 
         this.htmlPresentTouches.style.position = 'absolute';
-        this.htmlPresentTouches.style.width = '100%';
-        this.htmlPresentTouches.style.height = '100%';
+        this.htmlPresentTouches.style.width = this.htmlTouchBox.style.width;
+        this.htmlPresentTouches.style.height = this.htmlTouchBox.style.height;
 
         this.htmlTargetBox = document.getElementById('targetBox');
 
         this.htmlTargetBox.style.position = 'absolute';
-        this.htmlTargetBox.style.width = '50%';
-        this.htmlTargetBox.style.height = '50%';
+        this.htmlTargetBox.style.width = parseInt(parseInt(this.htmlTouchBox.style.width)/2) + 'px';
+        this.htmlTargetBox.style.height = parseInt(parseInt(this.htmlTouchBox.style.height)/2) + 'px';
         this.htmlTargetBox.style.borderRight = '1px solid black';
         this.htmlTargetBox.style.borderBottom = '1px solid black';
 
