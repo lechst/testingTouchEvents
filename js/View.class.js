@@ -1,5 +1,7 @@
 View = function(){
 
+    var newThis = this;
+
     this.init = function(){
 
         this.mainLayout();
@@ -28,10 +30,80 @@ View = function(){
 
     };
 
+    this.screenToCanvas = function(x,y){
+        var newx = x - this.touchBox.htmlTouchBox.offsetTop
+            - parseInt(this.touchBox.htmlTouchBox.style.borderTopWidth);
+        var newy = y - this.touchBox.htmlTouchBox.offsetLeft
+            - parseInt(this.touchBox.htmlTouchBox.style.borderLeftWidth);
+        return [newx,newy];
+    };
+
     this.setTouches = function(type,touch,target,changed){
 
+        var a = {};
+
+        a.newTouch = [];
+        a.newTarget = [];
+        a.newChanged = [];
+
+        var loopTouches = function(touchType,touchArray){
+
+            var l = touchArray.length;
+
+            for(var i=0; i<l; i++){
+                var x = newThis.screenToCanvas(touchArray[i].pageX,touchArray[i].pageY)[0];
+                var y = newThis.screenToCanvas(touchArray[i].pageX,touchArray[i].pageY)[1];
+                a['new'+touchType].push([x,y]);
+            }
+
+        };
+
+        loopTouches('Touch',touch);
+        loopTouches('Target',target);
+        loopTouches('Changed',changed);
+
+        this.touchBox.drawTouch.setEvents(type, a.newTouch, a.newTarget, a.newChanged);
+        this.touchBox.drawTouch.drawPast(type, this.touchBox.ctxPastTouches, a.newChanged);
+        this.touchBox.drawTouch.clearCanvas(this.touchBox.htmlPresentTouches,this.touchBox.ctxPresentTouches);
+        this.touchBox.drawTouch.drawPresent(type, this.touchBox.ctxPresentTouches, a.newTouch, a.newTarget, a.newChanged);
+
+    };
+
+    this.resizeLayout = function(h,w) {
+        this.init();
     };
 
     this.init();
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
