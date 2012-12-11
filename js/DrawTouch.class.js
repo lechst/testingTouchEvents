@@ -62,7 +62,11 @@ DrawTouch = function(){
 
     this.drawPast = function(type,ctx,changed){
 
-        ctx.globalAlpha = this.parameters.pastAlpha;
+        if(type=='move'){
+            ctx.globalAlpha = this.parameters.pastAlpha/10;
+        } else {
+            ctx.globalAlpha = this.parameters.pastAlpha;
+        }
 
         this.loopTouches('Touch',type,ctx,changed);
 
