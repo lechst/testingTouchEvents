@@ -7,8 +7,8 @@ View = function(){
         this.mainLayout();
 
         this.historyBox = new HistoryBox(this);
-        this.infoBox = new InfoBox();
         this.touchBox = new TouchBox(this);
+        this.infoBox = new InfoBox(this);
 
     };
 
@@ -27,8 +27,6 @@ View = function(){
         this.htmlMainDiv.style.left = '0px';
         this.htmlMainDiv.style.width = this.window.innerWidth + 'px';
         this.htmlMainDiv.style.height = this.window.innerHeight + 'px';
-
-        console.log(this.htmlMainDiv.style.width);
 
     };
 

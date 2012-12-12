@@ -77,24 +77,12 @@ HistoryBox = function(view){
         this.htmlInfoBox = document.getElementById('infoBox');
 
         this.htmlInfoBox.style.position = 'absolute';
-        this.htmlInfoBox.style.top = '0px';
-        this.htmlInfoBox.style.right = '0px';
+        this.htmlInfoBox.style.border = '2px solid black';
+        this.htmlInfoBox.style.bottom = (-parseInt(this.htmlInfoBox.style.borderBottomWidth)) + 'px';
+        this.htmlInfoBox.style.right = (-parseInt(this.htmlInfoBox.style.borderRightWidth)) + 'px';
         this.htmlInfoBox.style.backgroundColor = 'white';
         this.htmlInfoBox.style.height = this.htmlToolsBox.style.height;
         this.htmlInfoBox.style.width = this.htmlToolsBox.style.height;
-        this.htmlInfoBox.style.borderLeft = '2px solid black';
-        this.htmlInfoBox.style.borderBottom = '2px solid black';
-
-        this.htmlInfoBox.innerHTML = '<p class="info">i</p>';
-
-        this.htmlInfoP = document.getElementsByClassName('info')[0];
-        this.htmlInfoP.style.width = this.htmlInfoBox.style.height;
-        this.htmlInfoP.style.height = parseInt(parseInt(this.htmlInfoBox.style.height)/2) + 'px';
-        this.htmlInfoP.style.marginTop = parseInt(parseInt(this.htmlInfoBox.style.height)/4-2) + 'px';
-        this.htmlInfoP.style.marginBottom = parseInt(parseInt(this.htmlInfoBox.style.height)/4) + 'px';
-        this.htmlInfoP.style.padding = '0px';
-        this.htmlInfoP.style.textAlign = 'center';
-        this.htmlInfoP.style.fontSize = parseInt(this.htmlInfoP.style.height)+'px';
 
         this.htmlScrollCanvas = document.getElementById('scrollCanvas');
 

@@ -17,8 +17,9 @@ Controller = function(){
     };
 
     this.bindMouseEvents = function() {
-        this.view.touchBox.htmlTouchBox.addEventListener('click',this.clickDrawEvent());
-        this.view.historyBox.htmlResetBox.addEventListener('click',this.clickResetEvent());
+        this.view.touchBox.htmlTouchBox.addEventListener('click',this.clickDrawEvent(),false);
+        this.view.historyBox.htmlResetBox.addEventListener('click',this.clickResetEvent(),false);
+        this.view.historyBox.htmlInfoBox.addEventListener('click',this.clickInfoShow(),false);
     };
 
     this.clickDrawEvent = function(){
@@ -44,11 +45,36 @@ Controller = function(){
         }
     };
 
+    this.clickInfoShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.view.historyBox.htmlInfoBox.removeEventListener('click',arguments.callee,false);
+            that.view.infoBox.intervalShowOn();
+            that.view.historyBox.htmlInfoBox.addEventListener('click',that.clickInfoHide(),false);
+
+        }
+    };
+
+    this.clickInfoHide = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.view.historyBox.htmlInfoBox.removeEventListener('click',arguments.callee,false);
+            that.view.infoBox.intervalHideOn();
+            that.view.historyBox.htmlInfoBox.addEventListener('click',that.clickInfoShow(),false);
+
+        }
+    };
+
     this.bindTouchEvents = function() {
         this.view.touchBox.htmlTouchBox.addEventListener('touchstart',this.touchStart(),false);
         this.view.touchBox.htmlTouchBox.addEventListener('touchmove',this.touchMove(),false);
         this.view.touchBox.htmlTouchBox.addEventListener('touchend',this.touchEnd(),false);
-        this.view.historyBox.htmlResetBox.addEventListener('touchstart',this.touchResetEvent());
+        this.view.historyBox.htmlResetBox.addEventListener('touchstart',this.touchResetEvent(),false);
+        this.view.historyBox.htmlInfoBox.addEventListener('touchstart',this.touchInfoShow(),false);
     };
 
     this.touchStart = function(){
@@ -82,6 +108,30 @@ Controller = function(){
 
             that.view.init();
             that.init();
+        }
+    };
+
+    this.touchInfoShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.view.historyBox.htmlInfoBox.removeEventListener('touchstart',arguments.callee,false);
+            that.view.infoBox.intervalShowOn();
+            that.view.historyBox.htmlInfoBox.addEventListener('touchstart',that.touchInfoHide(),false);
+
+        }
+    };
+
+    this.touchInfoHide = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.view.historyBox.htmlInfoBox.removeEventListener('touchstart',arguments.callee,false);
+            that.view.infoBox.intervalHideOn();
+            that.view.historyBox.htmlInfoBox.addEventListener('touchstart',that.touchInfoShow(),false);
+
         }
     };
 
