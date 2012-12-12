@@ -63,6 +63,17 @@ HistoryBox = function(view){
         this.htmlResetBox.style.borderRight = '2px solid black';
         this.htmlResetBox.style.borderBottom = '2px solid black';
 
+        this.htmlResetBox.innerHTML = '<p class="reset">X<p>';
+
+        this.htmlResetP = document.getElementsByClassName('reset')[0];
+        this.htmlResetP.style.width = this.htmlResetBox.style.height;
+        this.htmlResetP.style.height = parseInt(parseInt(this.htmlResetBox.style.height)/2) + 'px';
+        this.htmlResetP.style.marginTop = parseInt(parseInt(this.htmlResetBox.style.height)/4-2) + 'px';
+        this.htmlResetP.style.marginBottom = parseInt(parseInt(this.htmlResetBox.style.height)/4) + 'px';
+        this.htmlResetP.style.padding = '0px';
+        this.htmlResetP.style.textAlign = 'center';
+        this.htmlResetP.style.fontSize = parseInt(this.htmlResetP.style.height)+'px';
+
         this.htmlInfoBox = document.getElementById('infoBox');
 
         this.htmlInfoBox.style.position = 'absolute';
@@ -73,6 +84,17 @@ HistoryBox = function(view){
         this.htmlInfoBox.style.width = this.htmlToolsBox.style.height;
         this.htmlInfoBox.style.borderLeft = '2px solid black';
         this.htmlInfoBox.style.borderBottom = '2px solid black';
+
+        this.htmlInfoBox.innerHTML = '<p class="info">i</p>';
+
+        this.htmlInfoP = document.getElementsByClassName('info')[0];
+        this.htmlInfoP.style.width = this.htmlInfoBox.style.height;
+        this.htmlInfoP.style.height = parseInt(parseInt(this.htmlInfoBox.style.height)/2) + 'px';
+        this.htmlInfoP.style.marginTop = parseInt(parseInt(this.htmlInfoBox.style.height)/4-2) + 'px';
+        this.htmlInfoP.style.marginBottom = parseInt(parseInt(this.htmlInfoBox.style.height)/4) + 'px';
+        this.htmlInfoP.style.padding = '0px';
+        this.htmlInfoP.style.textAlign = 'center';
+        this.htmlInfoP.style.fontSize = parseInt(this.htmlInfoP.style.height)+'px';
 
         this.htmlScrollCanvas = document.getElementById('scrollCanvas');
 

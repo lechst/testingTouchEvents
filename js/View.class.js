@@ -28,6 +28,8 @@ View = function(){
         this.htmlMainDiv.style.width = this.window.innerWidth + 'px';
         this.htmlMainDiv.style.height = this.window.innerHeight + 'px';
 
+        console.log(this.htmlMainDiv.style.width);
+
     };
 
     this.screenToCanvas = function(x,y){
@@ -69,7 +71,7 @@ View = function(){
 
     };
 
-    this.resizeLayout = function(h,w) {
+    this.resizeLayout = function() {
         this.init();
     };
 

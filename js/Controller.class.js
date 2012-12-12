@@ -17,10 +17,11 @@ Controller = function(){
     };
 
     this.bindMouseEvents = function() {
-        this.view.touchBox.htmlTouchBox.addEventListener('click',this.clickEvent());
+        this.view.touchBox.htmlTouchBox.addEventListener('click',this.clickDrawEvent());
+        this.view.historyBox.htmlResetBox.addEventListener('click',this.clickResetEvent());
     };
 
-    this.clickEvent = function(){
+    this.clickDrawEvent = function(){
         var that = this;
         return function(e){
             e.preventDefault();
@@ -33,10 +34,21 @@ Controller = function(){
         }
     };
 
+    this.clickResetEvent = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.view.init();
+            that.init();
+        }
+    };
+
     this.bindTouchEvents = function() {
         this.view.touchBox.htmlTouchBox.addEventListener('touchstart',this.touchStart(),false);
         this.view.touchBox.htmlTouchBox.addEventListener('touchmove',this.touchMove(),false);
         this.view.touchBox.htmlTouchBox.addEventListener('touchend',this.touchEnd(),false);
+        this.view.historyBox.htmlResetBox.addEventListener('touchstart',this.touchResetEvent());
     };
 
     this.touchStart = function(){
@@ -60,6 +72,16 @@ Controller = function(){
         return function(e){
             e.preventDefault();
             that.view.setTouches('end',e.touches,e.targetTouches,e.changedTouches);
+        }
+    };
+
+    this.touchResetEvent = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.view.init();
+            that.init();
         }
     };
 
