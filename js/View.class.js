@@ -67,6 +67,8 @@ View = function(){
         this.touchBox.drawTouch.clearCanvas(this.touchBox.htmlPresentTouches,this.touchBox.ctxPresentTouches);
         this.touchBox.drawTouch.drawPresent(type, this.touchBox.ctxPresentTouches, a.newTouch, a.newTarget, a.newChanged);
 
+        this.historyBox.setEvent(type);
+
     };
 
     this.resizeLayout = function() {

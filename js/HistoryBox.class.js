@@ -163,6 +163,78 @@ HistoryBox = function(view){
         this.htmlRightDiv.style.width = this.htmlToolsBox.style.height;
         this.htmlRightDiv.style.borderLeft = '2px solid black';
 
+        this.drawTrigger();
+
+    };
+
+    this.parameters = {height: 30, width: 10, spaceTop: 5, spaceBottom: 5, spaceBetween: 10};
+
+    this.events = [];
+
+    this.current = -1;
+
+    this.setEvent = function(type){
+        this.events.push(type);
+        var l = this.events.length;
+        this.current = l-1;
+        this.drawEvents();
+    };
+
+    this.drawTrigger = function(){
+
+        var ctx = this.ctxHistoryLine;
+        var cnvs = this.htmlHistoryLine;
+
+        ctx.beginPath();
+        ctx.moveTo(cnvs.width/2-5,0);
+        ctx.lineTo(cnvs.width/2,10);
+        ctx.moveTo(cnvs.width/2,10);
+        ctx.lineTo(cnvs.width/2+5,0);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+
+    };
+
+    this.drawEvents = function(){
+
+        var ctx = this.ctxHistoryLine;
+        var cnvs = this.htmlHistoryLine;
+        var x0 = cnvs.width/2;
+        var y0 = this.parameters.spaceTop;
+        var h = this.parameters.height;
+        var w = this.parameters.width;
+        var s = this.parameters.spaceBetween;
+
+        var l = this.events.length;
+        var cId = this.current;
+
+        ctx.clearRect(0,y0,2*x0,h);
+
+        for(var i=0; i < l; i++){
+
+            var x = (i - cId) * (w + s) + x0 - w/2;
+            var y = y0;
+            var type = this.events[i];
+            var clr = this.view.touchBox.drawTouch.parameters[type+'Color'];
+            ctx.beginPath();
+            ctx.fillStyle = clr;
+            ctx.fillRect(x,y,w,h);
+
+        }
+
+        this.drawTrigger();
+
+    };
+
+    this.changeCurrent = function(id){
+
+        this.current = id;
+
+    };
+
+    this.showCurrent = function(){
+
     };
 
     this.init();
