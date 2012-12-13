@@ -83,6 +83,7 @@ HistoryBox = function(view){
         this.htmlInfoBox.style.backgroundColor = 'white';
         this.htmlInfoBox.style.height = this.htmlToolsBox.style.height;
         this.htmlInfoBox.style.width = this.htmlToolsBox.style.height;
+        this.htmlInfoBox.style.zIndex = '2';
 
         this.htmlScrollCanvas = document.getElementById('scrollCanvas');
 
@@ -143,6 +144,7 @@ HistoryBox = function(view){
         this.htmlLeftDiv.style.height = this.htmlToolsBox.style.height;
         this.htmlLeftDiv.style.width = this.htmlToolsBox.style.height;
         this.htmlLeftDiv.style.borderRight = '2px solid black';
+        this.htmlLeftDiv.style.zIndex = '1';
 
         this.htmlScrollDiv = document.getElementById('scrollDiv');
 
@@ -153,6 +155,7 @@ HistoryBox = function(view){
         this.htmlScrollDiv.style.width = parseInt(parseInt(this.htmlToolsBox.style.height)/2) + 'px';
         this.htmlScrollDiv.style.borderRadius = parseInt(parseInt(this.htmlToolsBox.style.height)/4) + 'px';
         this.htmlScrollDiv.style.backgroundColor = 'black';
+        this.htmlScrollDiv.style.zIndex = '1';
 
         this.htmlRightDiv = document.getElementById('rightDiv');
 
@@ -162,8 +165,10 @@ HistoryBox = function(view){
         this.htmlRightDiv.style.height = this.htmlToolsBox.style.height;
         this.htmlRightDiv.style.width = this.htmlToolsBox.style.height;
         this.htmlRightDiv.style.borderLeft = '2px solid black';
+        this.htmlRightDiv.style.zIndex = '1';
 
         this.drawTrigger();
+        this.drawHistoryNav();
 
     };
 
@@ -190,6 +195,31 @@ HistoryBox = function(view){
         ctx.lineTo(cnvs.width/2,10);
         ctx.moveTo(cnvs.width/2,10);
         ctx.lineTo(cnvs.width/2+5,0);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+
+    };
+
+    this.drawHistoryNav = function(){
+
+        var ctx = this.ctxScrollCanvas;
+        var u = parseInt(this.htmlScrollCanvas.height/4);
+        var w = this.htmlScrollCanvas.width;
+
+        ctx.beginPath();
+        ctx.moveTo(3*u,u+1);
+        ctx.lineTo(u,2*u+1);
+        ctx.lineTo(3*u,3*u+1);
+        ctx.moveTo(5*u,u+1);
+        ctx.lineTo(5*u,3*u+1);
+        ctx.moveTo(5*u,2*u+1);
+        ctx.lineTo(w-5*u,2*u+1);
+        ctx.moveTo(w-5*u,u+1);
+        ctx.lineTo(w-5*u,3*u+1);
+        ctx.moveTo(w-3*u,u+1);
+        ctx.lineTo(w-u,2*u+1);
+        ctx.lineTo(w-3*u,3*u+1);
         ctx.lineWidth = 2;
         ctx.strokeStyle = 'black';
         ctx.stroke();

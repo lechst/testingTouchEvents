@@ -21,6 +21,8 @@ Controller = function(){
         this.view.historyBox.htmlResetBox.addEventListener('click',this.clickResetEvent(),false);
         this.view.historyBox.htmlInfoBox.addEventListener('click',this.clickInfoShow(),false);
         this.view.historyBox.htmlHistoryLine.addEventListener('click',this.clickPastShow(),false);
+        this.view.historyBox.htmlLeftDiv.addEventListener('click',this.clickPrevShow(),false);
+        this.view.historyBox.htmlRightDiv.addEventListener('click',this.clickNextShow(),false);
     };
 
     this.clickDrawEvent = function(){
@@ -81,6 +83,35 @@ Controller = function(){
         }
     };
 
+    this.clickPrevShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+            console.log('test');
+            if(that.view.historyBox.current > 0){
+
+                that.view.historyBox.current -= 1;
+                that.view.historyBox.drawEvents();
+                that.view.historyBox.showCurrent();
+            }
+
+        }
+    };
+
+    this.clickNextShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            if(that.view.historyBox.current < (that.view.historyBox.events.length-1)){
+                that.view.historyBox.current += 1;
+                that.view.historyBox.drawEvents();
+                that.view.historyBox.showCurrent();
+            }
+
+        }
+    };
+
     this.bindTouchEvents = function() {
         this.view.touchBox.htmlTouchBox.addEventListener('touchstart',this.touchStart(),false);
         this.view.touchBox.htmlTouchBox.addEventListener('touchmove',this.touchMove(),false);
@@ -88,6 +119,8 @@ Controller = function(){
         this.view.historyBox.htmlResetBox.addEventListener('touchstart',this.touchResetEvent(),false);
         this.view.historyBox.htmlInfoBox.addEventListener('touchstart',this.touchInfoShow(),false);
         this.view.historyBox.htmlHistoryLine.addEventListener('touchstart',this.touchPastShow(),false);
+        this.view.historyBox.htmlLeftDiv.addEventListener('touchstart',this.touchPrevShow(),false);
+        this.view.historyBox.htmlRightDiv.addEventListener('touchstart',this.touchNextShow(),false);
     };
 
     this.touchStart = function(){
@@ -156,6 +189,35 @@ Controller = function(){
             var x = e.pageX;
 
             that.view.historyBox.changeCurrent(x);
+        }
+    };
+
+    this.touchPrevShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+            console.log('test');
+            if(that.view.historyBox.current > 0){
+
+                that.view.historyBox.current -= 1;
+                that.view.historyBox.drawEvents();
+                that.view.historyBox.showCurrent();
+            }
+
+        }
+    };
+
+    this.touchNextShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            if(that.view.historyBox.current < (that.view.historyBox.events.length-1)){
+                that.view.historyBox.current += 1;
+                that.view.historyBox.drawEvents();
+                that.view.historyBox.showCurrent();
+            }
+
         }
     };
 
