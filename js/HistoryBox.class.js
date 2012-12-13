@@ -246,7 +246,7 @@ HistoryBox = function(view){
         var leftBorder = - cId * (w + s) + x0 - w/2 - s/2;
         var rightBorder = (l - 1 - cId) * (w + s) + x0 + w/2 + s/2;
 
-        if((x >= leftBorder) && (x <= rightBorder)){
+        if((newx > leftBorder) && (newx < rightBorder)){
             this.current = Math.floor((newx+w/2+s/2-x0)/(w+s)+cId);
             this.drawEvents();
             this.showCurrent();
