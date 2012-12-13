@@ -199,8 +199,8 @@ HistoryBox = function(view){
     this.drawEvents = function(){
 
         var ctx = this.ctxHistoryLine;
-        var cnvs = this.htmlHistoryLine;
-        var x0 = cnvs.width/2;
+        var canv = this.htmlHistoryLine;
+        var x0 = canv.width/2;
         var y0 = this.parameters.spaceTop;
         var h = this.parameters.height;
         var w = this.parameters.width;
@@ -227,13 +227,37 @@ HistoryBox = function(view){
 
     };
 
-    this.changeCurrent = function(id){
+    this.changeCurrent = function(x){
 
-        this.current = id;
+        var ctx = this.ctxHistoryLine;
+        var canv = this.htmlHistoryLine;
+        var x0 = canv.width/2;
+        var y0 = this.parameters.spaceTop;
+        var h = this.parameters.height;
+        var w = this.parameters.width;
+        var s = this.parameters.spaceBetween;
+
+        var l = this.events.length;
+        var cId = this.current;
+
+        var newx = x - this.htmlHistoryBox.offsetLeft
+            - parseInt(this.htmlHistoryBox.style.borderLeftWidth);
+
+        var leftBorder = - cId * (w + s) + x0 - w/2 - s/2;
+        var rightBorder = (l - 1 - cId) * (w + s) + x0 + w/2 + s/2;
+
+        if((x >= leftBorder) && (x <= rightBorder)){
+            this.current = Math.floor((newx+w/2+s/2-x0)/(w+s)+cId);
+            this.drawEvents();
+            this.showCurrent();
+        }
 
     };
 
     this.showCurrent = function(){
+
+        this.view.touchBox.drawTouch.clearCanvas(this.view.touchBox.htmlPresentTouches,this.view.touchBox.ctxPresentTouches);
+        this.view.touchBox.drawTouch.drawPresent(this.view.touchBox.drawTouch.events[this.current].type,this.view.touchBox.ctxPresentTouches,this.view.touchBox.drawTouch.events[this.current].touch,this.view.touchBox.drawTouch.events[this.current].target,this.view.touchBox.drawTouch.events[this.current].changed);
 
     };
 

@@ -31,10 +31,10 @@ View = function(){
     };
 
     this.screenToCanvas = function(x,y){
-        var newx = x - this.touchBox.htmlTouchBox.offsetTop
-            - parseInt(this.touchBox.htmlTouchBox.style.borderTopWidth);
-        var newy = y - this.touchBox.htmlTouchBox.offsetLeft
+        var newx = x - this.touchBox.htmlTouchBox.offsetLeft
             - parseInt(this.touchBox.htmlTouchBox.style.borderLeftWidth);
+        var newy = y - this.touchBox.htmlTouchBox.offsetTop
+            - parseInt(this.touchBox.htmlTouchBox.style.borderTopWidth);
         return [newx,newy];
     };
 
