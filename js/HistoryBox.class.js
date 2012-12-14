@@ -150,7 +150,7 @@ HistoryBox = function(view){
 
         this.htmlScrollDiv.style.position = 'absolute';
         this.htmlScrollDiv.style.top = parseInt(parseInt(this.htmlToolsBox.style.height)/4) + 'px';
-        this.htmlScrollDiv.style.left = 2*parseInt(this.htmlToolsBox.style.height) + 'px';
+        this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1) + 'px';
         this.htmlScrollDiv.style.height = parseInt(parseInt(this.htmlToolsBox.style.height)/2) + 'px';
         this.htmlScrollDiv.style.width = parseInt(parseInt(this.htmlToolsBox.style.height)/2) + 'px';
         this.htmlScrollDiv.style.borderRadius = parseInt(parseInt(this.htmlToolsBox.style.height)/4) + 'px';
@@ -183,6 +183,7 @@ HistoryBox = function(view){
         var l = this.events.length;
         this.current = l-1;
         this.drawEvents();
+        this.changeScrollDiv();
     };
 
     this.drawTrigger = function(){
@@ -279,6 +280,59 @@ HistoryBox = function(view){
         if((newx > leftBorder) && (newx < rightBorder)){
             this.current = Math.floor((newx+w/2+s/2-x0)/(w+s)+cId);
             this.drawEvents();
+            this.changeScrollDiv();
+            this.showCurrent();
+        }
+
+    };
+
+    this.changeScrollDiv = function(){
+
+        var ctx = this.ctxScrollCanvas;
+        var canv = this.htmlScrollCanvas;
+        var u = parseInt(this.htmlScrollCanvas.height/4);
+        var w = this.htmlScrollCanvas.width;
+
+        var leftBorder = 5*u;
+        var rightBorder = w - 5*u - parseInt(this.htmlScrollDiv.style.width) - 6;
+
+        var l = this.events.length;
+        var cId = this.current;
+
+        if(l==1){
+            var dx = (rightBorder-leftBorder);
+        }
+        else if(l > 1) {
+            var dx = parseInt(cId*(rightBorder-leftBorder)/(l-1));
+        }
+
+
+        this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1 + dx) + 'px';
+
+    };
+
+    this.changeCurrentScroll = function(x){
+
+        var ctx = this.ctxScrollCanvas;
+        var canv = this.htmlScrollCanvas;
+        var u = parseInt(this.htmlScrollCanvas.height/4);
+        var w = this.htmlScrollCanvas.width;
+
+        var leftBorder = 6*u;
+        var rightBorder = w - 6*u;
+
+        var l = this.events.length;
+
+        var newx = x - this.htmlHistoryBox.offsetLeft
+            - parseInt(this.htmlHistoryBox.style.borderLeftWidth)
+            - this.htmlResetBox.offsetWidth
+            - parseInt(this.htmlScrollCanvasDiv.style.marginLeft)
+            - parseInt(this.htmlScrollCanvasDiv.style.borderLeftWidth);
+
+        if((newx > leftBorder) && (newx < rightBorder)){
+            this.current = Math.floor(l*(newx-leftBorder)/(rightBorder-leftBorder));
+            this.drawEvents();
+            this.changeScrollDiv();
             this.showCurrent();
         }
 

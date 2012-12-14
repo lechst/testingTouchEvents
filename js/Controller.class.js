@@ -23,6 +23,7 @@ Controller = function(){
         this.view.historyBox.htmlHistoryLine.addEventListener('click',this.clickPastShow(),false);
         this.view.historyBox.htmlLeftDiv.addEventListener('click',this.clickPrevShow(),false);
         this.view.historyBox.htmlRightDiv.addEventListener('click',this.clickNextShow(),false);
+        this.view.historyBox.htmlScrollCanvas.addEventListener('click',this.clickScrollShow(),false);
     };
 
     this.clickDrawEvent = function(){
@@ -87,11 +88,10 @@ Controller = function(){
         var that = this;
         return function(e){
             e.preventDefault();
-            console.log('test');
             if(that.view.historyBox.current > 0){
-
                 that.view.historyBox.current -= 1;
                 that.view.historyBox.drawEvents();
+                that.view.historyBox.changeScrollDiv();
                 that.view.historyBox.showCurrent();
             }
 
@@ -106,9 +106,18 @@ Controller = function(){
             if(that.view.historyBox.current < (that.view.historyBox.events.length-1)){
                 that.view.historyBox.current += 1;
                 that.view.historyBox.drawEvents();
+                that.view.historyBox.changeScrollDiv();
                 that.view.historyBox.showCurrent();
             }
 
+        }
+    };
+
+    this.clickScrollShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+            that.view.historyBox.changeCurrentScroll(e.pageX);
         }
     };
 
@@ -121,6 +130,7 @@ Controller = function(){
         this.view.historyBox.htmlHistoryLine.addEventListener('touchstart',this.touchPastShow(),false);
         this.view.historyBox.htmlLeftDiv.addEventListener('touchstart',this.touchPrevShow(),false);
         this.view.historyBox.htmlRightDiv.addEventListener('touchstart',this.touchNextShow(),false);
+        this.view.historyBox.htmlScrollCanvas.addEventListener('touchstart',this.touchScrollShow(),false);
     };
 
     this.touchStart = function(){
@@ -186,7 +196,7 @@ Controller = function(){
         return function(e){
             e.preventDefault();
 
-            var x = e.pageX;
+            var x = e.touches[0].pageX;
 
             that.view.historyBox.changeCurrent(x);
         }
@@ -198,9 +208,9 @@ Controller = function(){
             e.preventDefault();
             console.log('test');
             if(that.view.historyBox.current > 0){
-
                 that.view.historyBox.current -= 1;
                 that.view.historyBox.drawEvents();
+                that.view.historyBox.changeScrollDiv();
                 that.view.historyBox.showCurrent();
             }
 
@@ -215,9 +225,19 @@ Controller = function(){
             if(that.view.historyBox.current < (that.view.historyBox.events.length-1)){
                 that.view.historyBox.current += 1;
                 that.view.historyBox.drawEvents();
+                that.view.historyBox.changeScrollDiv();
                 that.view.historyBox.showCurrent();
             }
 
+        }
+    };
+
+    this.touchScrollShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+            var x = e.touches[0].pageX;
+            that.view.historyBox.changeCurrentScroll(x);
         }
     };
 
