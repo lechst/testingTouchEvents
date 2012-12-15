@@ -39,9 +39,17 @@ InfoBox = function(view){
         this.view.historyBox.htmlInfoBox.finalWidth = this.view.historyBox.htmlHistoryBox.offsetWidth
             - parseInt(this.view.historyBox.htmlHistoryBox.style.borderLeftWidth)
             - parseInt(this.view.historyBox.htmlHistoryBox.style.borderRightWidth);
-        this.stepH = 5;
-        this.stepW = 10;
-
+        var dh = this.view.historyBox.htmlInfoBox.finalHeight - this.view.historyBox.htmlInfoBox.initialHeight;
+        var dw = this.view.historyBox.htmlInfoBox.finalWidth - this.view.historyBox.htmlInfoBox.initialWidth;
+        var stepSpeed = 5;
+        if(dh > dw){
+            this.stepH = parseInt(dh/dw) * stepSpeed;
+            this.stepW = stepSpeed;
+        }
+        else {
+            this.stepH = stepSpeed;
+            this.stepW = parseInt(dw/dh) * stepSpeed;
+        }
     };
 
     this.intervalShowOn = function(){
