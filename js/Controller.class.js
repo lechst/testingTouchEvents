@@ -35,7 +35,7 @@ Controller = function(){
             var target = [{pageX: e.pageX, pageY: e.pageY}];
             var changed = [{pageX: e.pageX, pageY: e.pageY}];
 
-            that.view.setTouches('move',touch,target,changed);
+            that.view.setTouches('start',touch,target,changed);
         }
     };
 

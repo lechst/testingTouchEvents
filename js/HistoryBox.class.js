@@ -172,7 +172,7 @@ HistoryBox = function(view){
 
     };
 
-    this.parameters = {height: 30, width: 10, spaceTop: 5, spaceBottom: 5, spaceBetween: 10};
+    this.parameters = {height: 30, startWidth: 10, moveWidth: 2, endWidth: 10, spaceTop: 5, spaceBottom: 5, spaceBetween: 1};
 
     this.events = [];
 
@@ -234,19 +234,55 @@ HistoryBox = function(view){
         var x0 = canv.width/2;
         var y0 = this.parameters.spaceTop;
         var h = this.parameters.height;
-        var w = this.parameters.width;
         var s = this.parameters.spaceBetween;
 
         var l = this.events.length;
         var cId = this.current;
+        var ww = 0;
 
         ctx.clearRect(0,y0,2*x0,h);
 
-        for(var i=0; i < l; i++){
+        var type = this.events[cId];
+        var wCurrent = this.parameters[type+'Width'];
+        var x = x0 - wCurrent/2;
+        var y = y0;
 
-            var x = (i - cId) * (w + s) + x0 - w/2;
-            var y = y0;
+        var clr = this.view.touchBox.drawTouch.parameters[type+'Color'];
+        ctx.beginPath();
+        ctx.fillStyle = clr;
+        ctx.fillRect(x,y,wCurrent,h);
+
+        for(var i=cId+1; i < l; i++){
+
             var type = this.events[i];
+
+            var w = this.parameters[type+'Width'];
+
+            var x = (i - cId) * s + ww + x0 + wCurrent/2;
+            var y = y0;
+
+            ww += w;
+
+            var clr = this.view.touchBox.drawTouch.parameters[type+'Color'];
+            ctx.beginPath();
+            ctx.fillStyle = clr;
+            ctx.fillRect(x,y,w,h);
+
+        }
+
+        ww = 0;
+
+        for(var i=cId-1; i > -1; i--){
+
+            var type = this.events[i];
+
+            var w = this.parameters[type+'Width'];
+
+            var x = (i - cId) * s - ww + x0 - wCurrent/2 - w;
+            var y = y0;
+
+            ww += w;
+
             var clr = this.view.touchBox.drawTouch.parameters[type+'Color'];
             ctx.beginPath();
             ctx.fillStyle = clr;
@@ -265,7 +301,6 @@ HistoryBox = function(view){
         var x0 = canv.width/2;
         var y0 = this.parameters.spaceTop;
         var h = this.parameters.height;
-        var w = this.parameters.width;
         var s = this.parameters.spaceBetween;
 
         var l = this.events.length;
@@ -274,14 +309,43 @@ HistoryBox = function(view){
         var newx = x - this.htmlHistoryBox.offsetLeft
             - parseInt(this.htmlHistoryBox.style.borderLeftWidth);
 
-        var leftBorder = - cId * (w + s) + x0 - w/2 - s/2;
-        var rightBorder = (l - 1 - cId) * (w + s) + x0 + w/2 + s/2;
+        var type = this.events[cId];
+
+        var w = this.parameters[type+'Width'];
+        var wwLeft = 0;
+        var wwRight = 0;
+
+        for(i=0; i<cId; i++){
+            var type = this.events[i];
+            wwLeft += this.parameters[type+'Width'];
+        }
+
+        for(i=cId+1; i<l; i++){
+            var type = this.events[i];
+            wwRight += this.parameters[type+'Width'];
+        }
+
+        var leftBorder = - cId * s - wwLeft + x0 - w/2 + s/2;
+        var rightBorder = (l - 1 - cId) * s + wwRight + x0 + w/2 + s/2;
 
         if((newx > leftBorder) && (newx < rightBorder)){
-            this.current = Math.floor((newx+w/2+s/2-x0)/(w+s)+cId);
-            this.drawEvents();
-            this.changeScrollDiv();
-            this.showCurrent();
+
+            var ww = 0;
+
+            for(i=0; i<l; i++){
+
+                var type = this.events[i];
+                var w = this.parameters[type+'Width'];
+                ww += w;
+
+                if((newx >= (leftBorder + i*s + ww - w - s/2)) && (newx < (leftBorder + i*s + ww + s/2))){
+                    this.current = i;
+                    this.drawEvents();
+                    this.changeScrollDiv();
+                    this.showCurrent();
+                }
+            }
+
         }
 
     };
