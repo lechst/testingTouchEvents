@@ -129,11 +129,16 @@ Controller = function(){
         this.view.historyBox.htmlInfoBox.addEventListener('touchstart',this.touchInfoShow(),false);
         this.view.historyBox.htmlHistoryLine.addEventListener('touchstart',this.touchPastShow(),false);
         this.view.historyBox.htmlHistoryLine.addEventListener('touchmove',this.movePastShow(),false);
+        this.view.historyBox.htmlHistoryLine.addEventListener('touchend',this.endPastShow(),false);
         this.view.historyBox.htmlLeftDiv.addEventListener('touchstart',this.touchPrevShow(),false);
         this.view.historyBox.htmlRightDiv.addEventListener('touchstart',this.touchNextShow(),false);
         this.view.historyBox.htmlScrollCanvas.addEventListener('touchstart',this.touchScrollShow(),false);
         this.view.historyBox.htmlScrollCanvas.addEventListener('touchmove',this.moveScrollShow(),false);
     };
+
+    this.finger = 0;
+    this.shift = 0;
+    this.position = 0;
 
     this.touchStart = function(){
         var that = this;
@@ -200,6 +205,10 @@ Controller = function(){
 
             var x = e.touches[0].pageX;
 
+            that.finger = x;
+
+            that.position = x;
+
             that.view.historyBox.changeCurrent(x);
         }
     };
@@ -210,8 +219,20 @@ Controller = function(){
             e.preventDefault();
 
             var x = e.touches[0].pageX;
+            var dx = x - that.finger;
+            that.shift += dx;
+            that.finger = x;
 
-            that.view.historyBox.changeCurrent(x);
+            that.view.historyBox.changeCurrent(that.position + that.shift);
+        }
+    };
+
+    this.endPastShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            that.shift = 0;
         }
     };
 
