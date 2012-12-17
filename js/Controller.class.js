@@ -207,9 +207,11 @@ Controller = function(){
 
             that.finger = x;
 
-            that.position = x;
-
             that.view.historyBox.changeCurrent(x);
+
+            var p = that.view.historyBox.current;
+
+            that.position = p;
         }
     };
 
@@ -223,7 +225,11 @@ Controller = function(){
             that.shift += dx;
             that.finger = x;
 
-            that.view.historyBox.changeCurrent(that.position + that.shift);
+            that.view.historyBox.current = that.position;
+            that.view.historyBox.changeCurrent(that.view.historyBox.htmlHistoryLine.width/2
+                + that.view.historyBox.htmlHistoryBox.offsetLeft
+                + parseInt(that.view.historyBox.htmlHistoryBox.style.borderLeftWidth)
+                + that.shift);
         }
     };
 
