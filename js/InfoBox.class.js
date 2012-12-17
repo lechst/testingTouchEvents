@@ -59,7 +59,35 @@ InfoBox = function(view){
     this.intervalShowOff = function(){
         this.view.historyBox.htmlInfoBox.style.height = this.view.historyBox.htmlInfoBox.finalHeight + 'px';
         this.view.historyBox.htmlInfoBox.style.width = this.view.historyBox.htmlInfoBox.finalWidth + 'px';
-        this.view.historyBox.htmlInfoBox.innerHTML = '<p class="info">Here will be the information for the user.</p>';
+
+        this.view.historyBox.htmlInfoBox.innerHTML = '<canvas id="infoCanvas"></canvas>';
+
+        this.htmlInfoCanvas = document.getElementById('infoCanvas');
+        this.htmlInfoCanvas.style.width = this.view.historyBox.htmlInfoBox.finalWidth + 'px';
+        this.htmlInfoCanvas.style.height = this.view.historyBox.htmlInfoBox.finalHeight + 'px';
+        this.htmlInfoCanvas.width = this.htmlInfoCanvas.offsetWidth;
+        this.htmlInfoCanvas.height = this.htmlInfoCanvas.offsetHeight;
+        this.ctxInfoCanvas = this.htmlInfoCanvas.getContext('2d');
+
+        this.drawTouch.drawTouch(this.htmlInfoCanvas.width/4,this.htmlInfoCanvas.height/3,'start',this.ctxInfoCanvas);
+        this.ctxInfoCanvas.fillText('touchstart',this.htmlInfoCanvas.width/4-this.drawTouch.parameters.radius,this.htmlInfoCanvas.height/3+this.drawTouch.parameters.radius+20);
+
+        this.drawTouch.drawTouch(2*this.htmlInfoCanvas.width/4,this.htmlInfoCanvas.height/3,'move',this.ctxInfoCanvas);
+        this.ctxInfoCanvas.fillText('touchmove',2*this.htmlInfoCanvas.width/4-this.drawTouch.parameters.radius,this.htmlInfoCanvas.height/3+this.drawTouch.parameters.radius+20);
+
+        this.drawTouch.drawTouch(3*this.htmlInfoCanvas.width/4,this.htmlInfoCanvas.height/3,'end',this.ctxInfoCanvas);
+        this.ctxInfoCanvas.fillText('touchend',3*this.htmlInfoCanvas.width/4-this.drawTouch.parameters.radius,this.htmlInfoCanvas.height/3+this.drawTouch.parameters.radius+20);
+
+        this.drawTouch.drawTouch(this.htmlInfoCanvas.width/4,2*this.htmlInfoCanvas.height/3,'start',this.ctxInfoCanvas);
+        this.ctxInfoCanvas.fillText('touches',this.htmlInfoCanvas.width/4-this.drawTouch.parameters.radius,2*this.htmlInfoCanvas.height/3+this.drawTouch.parameters.radius+20);
+
+        this.drawTouch.drawTouch(2*this.htmlInfoCanvas.width/4,2*this.htmlInfoCanvas.height/3,'start',this.ctxInfoCanvas);
+        this.drawTouch.drawTarget(2*this.htmlInfoCanvas.width/4,2*this.htmlInfoCanvas.height/3,'start',this.ctxInfoCanvas);
+        this.ctxInfoCanvas.fillText('targetTouches',2*this.htmlInfoCanvas.width/4-this.drawTouch.parameters.radius,2*this.htmlInfoCanvas.height/3+this.drawTouch.parameters.radius+20);
+
+        this.drawTouch.drawChanged(3*this.htmlInfoCanvas.width/4,2*this.htmlInfoCanvas.height/3,'start',this.ctxInfoCanvas);
+        this.ctxInfoCanvas.fillText('changedTouches',3*this.htmlInfoCanvas.width/4-this.drawTouch.parameters.radius,2*this.htmlInfoCanvas.height/3+this.drawTouch.parameters.radius+20);
+
         clearInterval(this.intervalShow);
     };
 
