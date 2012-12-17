@@ -128,9 +128,11 @@ Controller = function(){
         this.view.historyBox.htmlResetBox.addEventListener('touchstart',this.touchResetEvent(),false);
         this.view.historyBox.htmlInfoBox.addEventListener('touchstart',this.touchInfoShow(),false);
         this.view.historyBox.htmlHistoryLine.addEventListener('touchstart',this.touchPastShow(),false);
+        this.view.historyBox.htmlHistoryLine.addEventListener('touchmove',this.movePastShow(),false);
         this.view.historyBox.htmlLeftDiv.addEventListener('touchstart',this.touchPrevShow(),false);
         this.view.historyBox.htmlRightDiv.addEventListener('touchstart',this.touchNextShow(),false);
         this.view.historyBox.htmlScrollCanvas.addEventListener('touchstart',this.touchScrollShow(),false);
+        this.view.historyBox.htmlScrollCanvas.addEventListener('touchmove',this.moveScrollShow(),false);
     };
 
     this.touchStart = function(){
@@ -202,6 +204,17 @@ Controller = function(){
         }
     };
 
+    this.movePastShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+
+            var x = e.touches[0].pageX;
+
+            that.view.historyBox.changeCurrent(x);
+        }
+    };
+
     this.touchPrevShow = function(){
         var that = this;
         return function(e){
@@ -233,6 +246,15 @@ Controller = function(){
     };
 
     this.touchScrollShow = function(){
+        var that = this;
+        return function(e){
+            e.preventDefault();
+            var x = e.touches[0].pageX;
+            that.view.historyBox.changeCurrentScroll(x);
+        }
+    };
+
+    this.moveScrollShow = function(){
         var that = this;
         return function(e){
             e.preventDefault();
