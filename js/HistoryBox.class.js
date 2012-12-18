@@ -363,15 +363,42 @@ HistoryBox = function(view){
         var l = this.events.length;
         var cId = this.current;
 
-        if(l==1){
-            var dx = (rightBorder-leftBorder);
-        }
-        else if(l > 1) {
-            var dx = parseInt(cId*(rightBorder-leftBorder)/(l-1));
+        var ww = 0;
+
+        for(i=0; i<cId; i++){
+            var type = this.events[i];
+            var w = this.parameters[type+'Width'];
+            ww += w;
         }
 
+        var type = this.events[cId];
+        var w = this.parameters[type+'Width'];
+        ww += w/2;
 
-        this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1 + dx) + 'px';
+        var sumw = 0;
+
+        for(i=0; i<l; i++){
+
+            var type = this.events[i];
+            var w = this.parameters[type+'Width'];
+            sumw += w;
+
+        }
+
+        var dx = parseInt((rightBorder-leftBorder)*ww/sumw);
+
+        if((cId == 0) && (l == 1)) {
+            this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1 + rightBorder - leftBorder) + 'px';
+        }
+        else if((cId == 0) && (l > 1)) {
+            this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1) + 'px';
+        }
+        else if (cId == l-1) {
+            this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1 + rightBorder - leftBorder) + 'px';
+        }
+        else {
+            this.htmlScrollDiv.style.left = (parseInt(this.htmlScrollCanvas.height/4) + this.htmlLeftDiv.offsetWidth - 1 + dx) + 'px';
+        }
 
     };
 
@@ -393,11 +420,34 @@ HistoryBox = function(view){
             - parseInt(this.htmlScrollCanvasDiv.style.marginLeft)
             - parseInt(this.htmlScrollCanvasDiv.style.borderLeftWidth);
 
+        var sumw = 0;
+
+        for(i=0; i<l; i++){
+
+            var type = this.events[i];
+            var w = this.parameters[type+'Width'];
+            sumw += w;
+
+        }
+
         if((newx > leftBorder) && (newx < rightBorder)){
-            this.current = Math.floor(l*(newx-leftBorder)/(rightBorder-leftBorder));
-            this.drawEvents();
-            this.changeScrollDiv();
-            this.showCurrent();
+
+            var ww = 0;
+
+            for(i=0; i<l; i++){
+
+                var type = this.events[i];
+                var w = this.parameters[type+'Width'];
+
+                if((((newx - leftBorder)/(rightBorder-leftBorder)) >= (ww/sumw)) && (((newx - leftBorder)/(rightBorder-leftBorder)) < ((ww+w)/sumw))){
+                    this.current = i;
+                    this.drawEvents();
+                    this.changeScrollDiv();
+                    this.showCurrent();
+                }
+
+                ww += w;
+            }
         }
 
     };
