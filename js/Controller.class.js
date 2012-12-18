@@ -204,14 +204,8 @@ Controller = function(){
             e.preventDefault();
 
             var x = e.touches[0].pageX;
-
             that.finger = x;
-
-            that.view.historyBox.changeCurrent(x);
-
-            var p = that.view.historyBox.current;
-
-            that.position = p;
+            that.position = that.view.historyBox.current;
         }
     };
 
