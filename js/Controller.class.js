@@ -219,11 +219,19 @@ Controller = function(){
             that.shift += dx;
             that.finger = x;
 
-            that.view.historyBox.current = that.position;
+            if((that.view.historyBox.current > 0) && (that.view.historyBox.current < (that.view.historyBox.events.length-1))){
+                that.view.historyBox.current = that.position;
+            }
+
             that.view.historyBox.changeCurrent(that.view.historyBox.htmlHistoryLine.width/2
                 + that.view.historyBox.htmlHistoryBox.offsetLeft
                 + parseInt(that.view.historyBox.htmlHistoryBox.style.borderLeftWidth)
                 + that.shift);
+
+            if((that.view.historyBox.current == 0 && dx < 0) || (that.view.historyBox.current == (that.view.historyBox.events.length-1) && dx > 0)){
+                that.position = that.view.historyBox.current;
+                that.shift = 0;
+            }
         }
     };
 
@@ -240,7 +248,7 @@ Controller = function(){
         var that = this;
         return function(e){
             e.preventDefault();
-            console.log('test');
+
             if(that.view.historyBox.current > 0){
                 that.view.historyBox.current -= 1;
                 that.view.historyBox.drawEvents();
